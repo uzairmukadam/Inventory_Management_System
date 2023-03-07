@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Inventory Management System</string>
+
+    <!-- Login Fragment -->
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+
+    <!-- Toast messages -->
+    <string name="update_available">An update is available</string>
+    <string name="reinstall_app">Please reinstall the app</string>
+    <string name="contact_admin">Please contact the admin</string>
+    <string name="empty_input">Please enter valid credentials</string>
+    <string name="incorrect_login">Please check your credentials</string>
+</resources>
