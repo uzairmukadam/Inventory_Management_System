@@ -50,7 +50,7 @@ public class LoginViewModel extends MainViewModel {
                 DocumentSnapshot user = task.getResult();
                 if (Boolean.TRUE.equals(user.getBoolean("is_active"))) {
                     if (Boolean.FALSE.equals(user.getBoolean("is_login"))) {
-                        model.setUser(user);
+                        model.setAccessLevel(user);
                         updateUser();
                     } else {
                         //signout and state something went wrong
@@ -71,7 +71,7 @@ public class LoginViewModel extends MainViewModel {
     }
 
     void updateUser() {
-        firestoreAdapter.updateUser(model.getUid()).addOnCompleteListener(task -> {
+        firestoreAdapter.updateUser(model.getUid(), true).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 log(false, 5);
                 navigateTo(R.id.action_loginFragment_to_dashboardFragment);

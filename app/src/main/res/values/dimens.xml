@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="min_editText_height">48dp</dimen>
+    <dimen name="min_spinner_height">32dp</dimen>
 </resources>

@@ -22,6 +22,9 @@ public class logMessages {
         messages.put(3, "is_login status set to true for new login");
         messages.put(4, "is_active status is set to false for new login");
         messages.put(5, "successful login by user");
+
+        //Options logs
+        messages.put(6, "successful sign-out by user");
     }
 
     public String getMessage(int id) {

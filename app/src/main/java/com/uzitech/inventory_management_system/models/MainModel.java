@@ -8,8 +8,7 @@ public class MainModel {
 
     String Uid, device;
     int version;
-
-    DocumentSnapshot user;
+    static int access_level;
 
     NavController navController;
 
@@ -25,8 +24,9 @@ public class MainModel {
         this.version = version;
     }
 
-    public void setUser(DocumentSnapshot user) {
-        this.user = user;
+    public void setAccessLevel(DocumentSnapshot user) {
+        access_level = Math.toIntExact(user.getLong("access_level"));
+
     }
 
     public void setNavController(NavController navController) {
@@ -45,8 +45,8 @@ public class MainModel {
         return version;
     }
 
-    public DocumentSnapshot getUser() {
-        return user;
+    public int getAccessLevel() {
+        return access_level;
     }
 
     public NavController getNavController() {

@@ -6,6 +6,21 @@
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
 
+    <!-- Dashboard Fragment -->
+    <string name="entry_purchase_button">Purchase</string>
+    <string name="entry_sale_button">Sale</string>
+    <string name="view_purchases_button">All Purchases</string>
+    <string name="view_sales_button">All Sales</string>
+    <string name="options_button">Options</string>
+
+    <string name="no_products">No product found</string>
+
+    <!-- Options Fragment -->
+    <string name="dev_note">Developed by UziTech</string>
+    <string name="manage_products_button">Manage products</string>
+    <string name="manage_users_button">Manage users</string>
+    <string name="sign_out_button">Sign-out</string>
+
     <!-- Toast messages -->
     <string name="update_available">An update is available</string>
     <string name="reinstall_app">Please reinstall the app</string>

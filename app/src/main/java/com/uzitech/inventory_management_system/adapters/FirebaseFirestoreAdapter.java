@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +30,20 @@ public class FirebaseFirestoreAdapter {
                 .get();
     }
 
-    public Task<Void> updateUser(String uid) {
+    public Task<Void> updateUser(String uid, boolean login) {
         Map<String, Object> data = new HashMap<>();
-        data.put("is_login", true);
+        data.put("is_login", login);
 
         return firestore.collection("users").document(uid).update(data);
+    }
+
+    public Task<QuerySnapshot> getCategories() {
+        return firestore.collection("categories").orderBy("name").get();
+    }
+
+    public Task<QuerySnapshot> getProducts(String category) {
+        return firestore.collection("products")
+                .whereEqualTo("category", category).orderBy("index").get();
     }
 
     public Task<DocumentReference> log(String uid, String device, int versionCode, boolean critical, String msg) {

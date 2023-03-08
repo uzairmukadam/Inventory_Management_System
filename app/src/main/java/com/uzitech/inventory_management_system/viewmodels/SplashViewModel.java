@@ -50,7 +50,7 @@ public class SplashViewModel extends MainViewModel {
                 DocumentSnapshot user = task.getResult();
                 if (Boolean.TRUE.equals(user.getBoolean("is_active"))) {
                     if (Boolean.TRUE.equals(user.getBoolean("is_login"))) {
-                        model.setUser(user);
+                        model.setAccessLevel(user);
                         navigateTo(R.id.action_splashFragment_to_dashboardFragment);
                     } else {
                         //signout and state something went wrong
