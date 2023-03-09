@@ -1,10 +1,12 @@
 package com.uzitech.inventory_management_system.viewmodels;
 
-import android.widget.ArrayAdapter;
-
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.uzitech.inventory_management_system.models.DashboardModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DashboardViewModel extends MainViewModel {
 
@@ -14,14 +16,13 @@ public class DashboardViewModel extends MainViewModel {
 
     public MutableLiveData<Boolean> categoriesReady, productsReady;
 
-    public ArrayAdapter<String> categoriesAdapter;
-
     public DashboardViewModel() {
         toastMessage = new MutableLiveData<>();
-        categoriesReady = new MutableLiveData<>(false);
-        productsReady = new MutableLiveData<>(false);
 
         dashboardModel = new DashboardModel();
+
+        categoriesReady = new MutableLiveData<>();
+        productsReady = new MutableLiveData<>();
 
         getCategories();
     }
@@ -37,12 +38,45 @@ public class DashboardViewModel extends MainViewModel {
     }
 
     public void setProducts(int index) {
-        firestoreAdapter.getProducts(dashboardModel.getCategoryId(index)).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                dashboardModel.setProducts(task.getResult());
+        if (dashboardModel.getProducts() != null) {
+            productsReady.setValue(true);
 
-                productsReady.setValue(true);
-            }
-        });
+            firestoreAdapter.getProducts(dashboardModel.getCategoryId(index)).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Map<String, Integer> temp = new HashMap<>();
+
+                    for (DocumentSnapshot doc : task.getResult()) {
+                        String name = doc.getString("name");
+                        int quantity = Math.toIntExact(doc.getLong("quantity"));
+
+                        temp.put(name, quantity);
+                    }
+
+                    if (!dashboardModel.getProducts().equals(temp)) {
+                        dashboardModel.setProducts(temp);
+
+                        productsReady.setValue(true);
+                    }
+                }
+            });
+        } else {
+            firestoreAdapter.getProducts(dashboardModel.getCategoryId(index)).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+
+                    Map<String, Integer> temp = new HashMap<>();
+
+                    for (DocumentSnapshot doc : task.getResult()) {
+                        String name = doc.getString("name");
+                        int quantity = Math.toIntExact(doc.getLong("quantity"));
+
+                        temp.put(name, quantity);
+                    }
+
+                    dashboardModel.setProducts(temp);
+
+                    productsReady.setValue(true);
+                }
+            });
+        }
     }
 }

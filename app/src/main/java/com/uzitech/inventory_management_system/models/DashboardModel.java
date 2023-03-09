@@ -4,7 +4,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class DashboardModel {
@@ -27,15 +26,8 @@ public class DashboardModel {
         }
     }
 
-    public void setProducts(QuerySnapshot querySnapshot) {
-        products = new HashMap<>();
-
-        for (DocumentSnapshot doc : querySnapshot) {
-            String name = doc.getString("name");
-            int quantity = Math.toIntExact(doc.getLong("quantity"));
-
-            products.put(name, quantity);
-        }
+    public void setProducts(Map<String, Integer> products) {
+        this.products = products;
     }
 
     public ArrayList<String> getCategories() {

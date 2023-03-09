@@ -27,6 +27,8 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel viewModel;
     Spinner category_spinner;
+
+    ArrayAdapter<String> categoriesAdapter;
     Button entry_purchase_button, entry_sale_button, view_purchases_button, view_sales_button, options_button;
     LinearLayout view_linearLayout, product_count_linearLayout;
 
@@ -77,6 +79,8 @@ public class DashboardFragment extends Fragment {
             view_linearLayout.setVisibility(View.GONE);
         }
 
+        options_button.setOnClickListener(view1 -> viewModel.navigateTo(R.id.action_dashboardFragment_to_optionsFragment));
+
         viewModel.categoriesReady.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
                 setSpinner();
@@ -90,19 +94,30 @@ public class DashboardFragment extends Fragment {
                 viewModel.productsReady.setValue(false);
             }
         });
-
-        options_button.setOnClickListener(view1 -> viewModel.navigateTo(R.id.action_dashboardFragment_to_optionsFragment));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (execute_onResume) {
+            setSpinner();
+            category_spinner.setSelection(category_index);
+            viewModel.categoriesReady.setValue(false);
+        } else {
+            execute_onResume = true;
+        }
+
+    }
 
     void setSpinner() {
-        viewModel.categoriesAdapter = new ArrayAdapter<>(getContext(),
+        categoriesAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item,
                 viewModel.dashboardModel.getCategories());
 
-        viewModel.categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        category_spinner.setAdapter(viewModel.categoriesAdapter);
+        category_spinner.setAdapter(categoriesAdapter);
 
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
