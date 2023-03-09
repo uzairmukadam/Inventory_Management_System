@@ -40,6 +40,12 @@
         <action
             android:id="@+id/action_dashboardFragment_to_optionsFragment"
             app:destination="@id/optionsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_entryFragment"
+            app:destination="@id/entryFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_viewFragment"
+            app:destination="@id/viewFragment" />
     </fragment>
     <fragment
         android:id="@+id/optionsFragment"
@@ -54,6 +60,56 @@
         <action
             android:id="@+id/action_optionsFragment_to_splashFragment"
             app:destination="@id/splashFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_optionsFragment_to_manageProductsFragment"
+            app:destination="@id/manageProductsFragment" />
+        <action
+            android:id="@+id/action_optionsFragment_to_manageUsersFragment"
+            app:destination="@id/manageUsersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.EntryFragment"
+        android:label="fragment_entry"
+        tools:layout="@layout/fragment_entry" >
+        <action
+            android:id="@+id/action_entryFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.ViewFragment"
+        android:label="fragment_view"
+        tools:layout="@layout/fragment_view" >
+        <action
+            android:id="@+id/action_viewFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageProductsFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.ManageProductsFragment"
+        android:label="fragment_manage_products"
+        tools:layout="@layout/fragment_manage_products" >
+        <action
+            android:id="@+id/action_manageProductsFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageUsersFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.ManageUsersFragment"
+        android:label="fragment_manage_users"
+        tools:layout="@layout/fragment_manage_users" >
+        <action
+            android:id="@+id/action_manageUsersFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>

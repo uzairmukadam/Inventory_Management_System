@@ -53,14 +53,14 @@ public class LoginViewModel extends MainViewModel {
                         model.setAccessLevel(user);
                         updateUser();
                     } else {
-                        //signout and state something went wrong
+                        authAdapter.signout();
                         toastMessage.setValue(R.string.contact_admin);
                         log(true, 3);
                         resetField.setValue(true);
                         inProgress.setValue(false);
                     }
                 } else {
-                    //signout and toast no access
+                    authAdapter.signout();
                     toastMessage.setValue(R.string.contact_admin);
                     log(true, 4);
                     resetField.setValue(true);

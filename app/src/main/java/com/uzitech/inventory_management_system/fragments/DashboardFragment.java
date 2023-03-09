@@ -30,6 +30,10 @@ public class DashboardFragment extends Fragment {
     Button entry_purchase_button, entry_sale_button, view_purchases_button, view_sales_button, options_button;
     LinearLayout view_linearLayout, product_count_linearLayout;
 
+    boolean execute_onResume;
+
+    int category_index;
+
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -39,6 +43,8 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+
+        execute_onResume = false;
     }
 
     @Override
@@ -88,6 +94,7 @@ public class DashboardFragment extends Fragment {
         options_button.setOnClickListener(view1 -> viewModel.navigateTo(R.id.action_dashboardFragment_to_optionsFragment));
     }
 
+
     void setSpinner() {
         viewModel.categoriesAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item,
@@ -100,6 +107,7 @@ public class DashboardFragment extends Fragment {
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                category_index = i;
                 viewModel.setProducts(i);
             }
 

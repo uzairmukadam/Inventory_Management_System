@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Inventory Management System</string>
 
+    <!-- Common -->
+
     <!-- Login Fragment -->
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>

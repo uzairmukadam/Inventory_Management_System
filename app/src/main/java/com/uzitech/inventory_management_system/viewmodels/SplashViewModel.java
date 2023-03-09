@@ -53,14 +53,16 @@ public class SplashViewModel extends MainViewModel {
                         model.setAccessLevel(user);
                         navigateTo(R.id.action_splashFragment_to_dashboardFragment);
                     } else {
-                        //signout and state something went wrong
+                        authAdapter.signout();
                         toastMessage.setValue(R.string.contact_admin);
                         log(true, 1);
+                        navigateTo(R.id.action_splashFragment_to_loginFragment);
                     }
                 } else {
-                    //signout and toast no access
+                    authAdapter.signout();
                     toastMessage.setValue(R.string.contact_admin);
                     log(true, 2);
+                    navigateTo(R.id.action_splashFragment_to_loginFragment);
                 }
             }
         });

@@ -2,13 +2,8 @@ package com.uzitech.inventory_management_system.viewmodels;
 
 import android.widget.ArrayAdapter;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.uzitech.inventory_management_system.models.DashboardModel;
 
 public class DashboardViewModel extends MainViewModel {
@@ -32,27 +27,21 @@ public class DashboardViewModel extends MainViewModel {
     }
 
     void getCategories() {
-        firestoreAdapter.getCategories().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    dashboardModel.setCategories(task.getResult());
+        firestoreAdapter.getCategories().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                dashboardModel.setCategories(task.getResult());
 
-                    categoriesReady.setValue(true);
-                }
+                categoriesReady.setValue(true);
             }
         });
     }
 
     public void setProducts(int index) {
-        firestoreAdapter.getProducts(dashboardModel.getCategoryId(index)).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    dashboardModel.setProducts(task.getResult());
+        firestoreAdapter.getProducts(dashboardModel.getCategoryId(index)).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                dashboardModel.setProducts(task.getResult());
 
-                    productsReady.setValue(true);
-                }
+                productsReady.setValue(true);
             }
         });
     }
