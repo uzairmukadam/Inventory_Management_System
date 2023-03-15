@@ -2,6 +2,10 @@
     <string name="app_name">Inventory Management System</string>
 
     <!-- Common -->
+    <string name="product_name">Product</string>
+    <string name="product_quantity">Quantity</string>
+    <string name="product_rate">Rate</string>
+    <string name="submit_button">Submit</string>
 
     <!-- Login Fragment -->
     <string name="email_hint">Email</string>
@@ -16,6 +20,13 @@
     <string name="options_button">Options</string>
 
     <string name="no_products">No product found</string>
+
+    <!-- Entry Fragment -->
+    <string name="invoice_no">Invoice No:</string>
+    <string name="name">Name:</string>
+    <string name="gst_no">GST No:</string>
+    <string name="select_manufacturer">Please select a manufacturer</string>
+    <string name="select_customer">Please select a customer</string>
 
     <!-- Options Fragment -->
     <string name="dev_note">Developed by UziTech</string>

@@ -64,6 +64,10 @@ public class DashboardFragment extends Fragment {
         view_linearLayout = view.findViewById(R.id.view_linearLayout);
         product_count_linearLayout = view.findViewById(R.id.product_count_linearLayout);
 
+        if (viewModel.model.getAccessLevel() > 1) {
+            view_linearLayout.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -81,6 +85,14 @@ public class DashboardFragment extends Fragment {
 
         options_button.setOnClickListener(view1 -> viewModel.navigateTo(R.id.action_dashboardFragment_to_optionsFragment));
 
+        entry_purchase_button.setOnClickListener(view1 -> loadPurchaseEntry());
+        entry_sale_button.setOnClickListener(view1 -> loadSaleEntry());
+
+        if (viewModel.model.getAccessLevel() < 2) {
+            view_purchases_button.setOnClickListener(view1 -> loadPurchaseView());
+            view_sales_button.setOnClickListener(view1 -> loadSaleView());
+        }
+
         viewModel.categoriesReady.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
                 setSpinner();
@@ -94,6 +106,34 @@ public class DashboardFragment extends Fragment {
                 viewModel.productsReady.setValue(false);
             }
         });
+    }
+
+    void loadPurchaseEntry() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 0);
+        bundle.putString("product_id", viewModel.dashboardModel.getCategoryId(category_index));
+        viewModel.model.getNavController().navigate(R.id.action_dashboardFragment_to_entryFragment, bundle);
+    }
+
+    void loadSaleEntry() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 1);
+        bundle.putString("product_id", viewModel.dashboardModel.getCategoryId(category_index));
+        viewModel.model.getNavController().navigate(R.id.action_dashboardFragment_to_entryFragment, bundle);
+    }
+
+    void loadPurchaseView() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 0);
+        bundle.putString("product_id", viewModel.dashboardModel.getCategoryId(category_index));
+        viewModel.model.getNavController().navigate(R.id.action_dashboardFragment_to_viewFragment, bundle);
+    }
+
+    void loadSaleView() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 1);
+        bundle.putString("product_id", viewModel.dashboardModel.getCategoryId(category_index));
+        viewModel.model.getNavController().navigate(R.id.action_dashboardFragment_to_viewFragment, bundle);
     }
 
     @Override
@@ -142,7 +182,6 @@ public class DashboardFragment extends Fragment {
             for (Map.Entry<String, Integer> product : viewModel.dashboardModel.getProducts().entrySet()) {
                 product_info = (LinearLayout) inflater
                         .inflate(R.layout.product_quantity_field, null, false);
-                product_info.setOrientation(LinearLayout.HORIZONTAL);
 
                 TextView label = product_info.findViewById(R.id.product_name);
                 label.setText(product.getKey());

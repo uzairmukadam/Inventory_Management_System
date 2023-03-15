@@ -27,7 +27,7 @@ public class DashboardViewModel extends MainViewModel {
         getCategories();
     }
 
-    void getCategories() {
+    private void getCategories() {
         firestoreAdapter.getCategories().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 dashboardModel.setCategories(task.getResult());

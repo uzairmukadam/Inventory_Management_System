@@ -46,6 +46,23 @@ public class FirebaseFirestoreAdapter {
                 .whereEqualTo("category", category).orderBy("index").get();
     }
 
+    public Task<QuerySnapshot> getIndividuals(String category, int type) {
+        String collection = null;
+
+        switch (type) {
+            case 0:
+                collection = "manufacturers";
+                break;
+            case 1:
+                collection = "customers";
+                break;
+        }
+
+        assert collection != null;
+        return firestore.collection(collection)
+                .whereArrayContains("categories", category).get();
+    }
+
     public Task<DocumentReference> log(String uid, String device, int versionCode, boolean critical, String msg) {
         Map<String, Object> log = new HashMap<>();
 
