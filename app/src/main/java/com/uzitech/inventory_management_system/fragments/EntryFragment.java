@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -23,7 +24,13 @@ import androidx.navigation.Navigation;
 import com.uzitech.inventory_management_system.R;
 import com.uzitech.inventory_management_system.viewmodels.EntryViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class EntryFragment extends Fragment {
 
@@ -36,8 +43,17 @@ public class EntryFragment extends Fragment {
 
     Spinner individuals_spinner;
 
+    TextView date_textView;
+
+    Button date_button, submit;
+
     ArrayList<LinearLayout> product_entries;
     LinearLayout product_entry_linerLayout;
+
+    View new_individual_layout;
+
+    Date date;
+    SimpleDateFormat df;
 
     public EntryFragment() {
         // Required empty public constructor
@@ -46,6 +62,10 @@ public class EntryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        date = Calendar.getInstance().getTime();
+
+        df = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
 
         if (getArguments() != null) {
             type = getArguments().getInt("type");
@@ -72,6 +92,12 @@ public class EntryFragment extends Fragment {
 
         individuals_spinner = view.findViewById(R.id.individuals_spinner);
         product_entry_linerLayout = view.findViewById(R.id.product_entry_linearLayout);
+        date_textView = view.findViewById(R.id.date_textView);
+        new_individual_layout = view.findViewById(R.id.new_individual_layout);
+        submit = view.findViewById(R.id.submit_entry_button);
+
+        date_textView.setText(df.format(date));
+        date_button = view.findViewById(R.id.edit_date_button);
 
         return view;
     }
@@ -85,6 +111,54 @@ public class EntryFragment extends Fragment {
         viewModel.model.setNavController(Navigation.findNavController(view));
 
         viewModel.getIndividuals();
+
+        date_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePicker datePicker = new DatePicker();
+                datePicker.show(getParentFragmentManager(), "Check");
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Map<String, Object>> entries = new ArrayList<>();
+
+                for (LinearLayout product_entry : product_entries) {
+                    Map<String, Object> products_entry = new HashMap<>();
+
+                    TextView product_name_textView = product_entry.findViewById(R.id.product_name_textView);
+                    String product_name = product_name_textView.getText().toString();
+                    String product_id = viewModel.entryModel.getProduct_ids()
+                            .get(viewModel.entryModel.getProducts().indexOf(product_name));
+
+                    EditText product_quantity_editText = product_entry.findViewById(R.id.product_quantity_editText);
+                    String quantity_val = product_quantity_editText.getText().toString();
+                    int quantity = 0;
+                    if (!quantity_val.trim().isEmpty()) {
+                        quantity = Integer.parseInt(product_quantity_editText.getText().toString());
+                    }
+
+                    EditText product_rate_editText = product_entry.findViewById(R.id.product_rate_editText);
+                    Double rate = Double.valueOf(product_rate_editText.getText().toString());
+
+                    products_entry.put("product_id", product_id);
+                    products_entry.put("quantity", quantity);
+                    products_entry.put("rate", rate);
+
+                    entries.add(products_entry);
+                }
+
+                Map<String, String> new_user = null;
+
+                if (individuals_spinner.getSelectedItemPosition() == viewModel.entryModel.getIndividuals().size() - 1) {
+                    new_user = new HashMap<>();
+                }
+
+                viewModel.submitEntry(date, individuals_spinner.getSelectedItemPosition(), entries, new_user);
+            }
+        });
 
         viewModel.setFrame.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean) {
@@ -109,6 +183,12 @@ public class EntryFragment extends Fragment {
         individuals_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (viewModel.entryModel.getIndividuals().get(i).equals("New +")) {
+                    new_individual_layout.setVisibility(View.VISIBLE);
+                    setNewIndividual();
+                } else {
+                    new_individual_layout.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -116,6 +196,10 @@ public class EntryFragment extends Fragment {
 
             }
         });
+    }
+
+    void setNewIndividual() {
+
     }
 
     void setFrame() {
@@ -183,3 +267,4 @@ class MinMaxFilter implements InputFilter {
         return b > 0 ? c >= 0 && c <= b : c >= b && c <= 0;
     }
 }
+

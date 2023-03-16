@@ -27,6 +27,8 @@
     <string name="gst_no">GST No:</string>
     <string name="select_manufacturer">Please select a manufacturer</string>
     <string name="select_customer">Please select a customer</string>
+    <string name="date">Date:</string>
+    <string name="edit_button">Edit</string>
 
     <!-- Options Fragment -->
     <string name="dev_note">Developed by UziTech</string>
@@ -40,4 +42,5 @@
     <string name="contact_admin">Please contact the admin</string>
     <string name="empty_input">Please enter valid credentials</string>
     <string name="incorrect_login">Please check your credentials</string>
+    <string name="check_individual_name">Please the name</string>
 </resources>

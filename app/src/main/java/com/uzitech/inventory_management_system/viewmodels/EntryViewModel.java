@@ -1,11 +1,19 @@
 package com.uzitech.inventory_management_system.viewmodels;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.uzitech.inventory_management_system.R;
 import com.uzitech.inventory_management_system.models.EntryModel;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntryViewModel extends MainViewModel {
 
@@ -81,6 +89,80 @@ public class EntryViewModel extends MainViewModel {
 
 
                 setFrame.setValue(true);
+            }
+        });
+    }
+
+    public void submitEntry(Date date, int index, ArrayList<Map<String, Object>> entries, Map<String, String> new_individual) {
+        if (new_individual != null) {
+            String individual_name = new_individual.get("name");
+
+            if (individual_name.trim().isEmpty()) {
+                toastMessage.setValue(R.string.check_individual_name);
+            } else {
+                addNewIndividual(new_individual, entries, date);
+            }
+            //update quantity
+        } else {
+            String id = entryModel.getIndividual_ids().get(index);
+
+            addEntry(entries, id, date);
+            //update quantity
+        }
+    }
+
+    private void addNewIndividual(Map<String, String> individual, ArrayList<Map<String, Object>> entries, Date date) {
+        firestoreAdapter.addIndividual(entryModel.getType(), individual).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    String id = task.getResult().getId();
+
+                    addEntry(entries, id, date);
+                }
+            }
+        });
+    }
+
+    private void addEntry(ArrayList<Map<String, Object>> entries, String id, Date date) {
+        Map<String, Object> entry = new HashMap<>();
+
+        entry.put("Timestamp", date);
+
+        if (entryModel.getType() == 0) {
+            entry.put("manufacturer", id);
+        } else {
+            entry.put("customer", id);
+        }
+
+        entry.put("entry", entries);
+
+        firestoreAdapter.addEntry(entryModel.getType(), entry).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    updateProduct(entries);
+                }
+            }
+        });
+    }
+
+    private void updateProduct(ArrayList<Map<String, Object>> entries) {
+        Map<String, Integer> products = new HashMap<>();
+
+        for (Map<String, Object> entry : entries) {
+            String id = (String) entry.get("product_id");
+            int quantity = (int) entry.get("quantity");
+
+            products.put(id, quantity);
+        }
+
+        firestoreAdapter.updateProductQuantity(entryModel.getType(), products).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    navigateTo(R.id.action_entryFragment_to_dashboardFragment);
+                }
             }
         });
     }
