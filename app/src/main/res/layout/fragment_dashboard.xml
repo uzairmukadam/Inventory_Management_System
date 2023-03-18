@@ -7,7 +7,7 @@
     tools:context=".fragments.DashboardFragment">
 
     <Spinner
-        android:id="@+id/category_spinner"
+        android:id="@+id/categories_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_spinner_height"
@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_spinner">
+        app:layout_constraintTop_toBottomOf="@+id/categories_spinner">
 
         <LinearLayout
             android:id="@+id/product_count_linearLayout"

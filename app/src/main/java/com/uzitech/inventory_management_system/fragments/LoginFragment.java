@@ -57,7 +57,6 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel.toastMessage.observe(getViewLifecycleOwner(), integer -> toast(getString(integer)));
-
         viewModel.model.setNavController(Navigation.findNavController(view));
 
         login_button.setOnClickListener(view1 -> {

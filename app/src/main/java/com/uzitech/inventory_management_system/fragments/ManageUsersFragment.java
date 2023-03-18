@@ -29,7 +29,7 @@ public class ManageUsersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_entry, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_record, container, false);
 
         return view;
     }

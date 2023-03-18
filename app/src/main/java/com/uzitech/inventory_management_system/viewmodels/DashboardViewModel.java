@@ -18,7 +18,6 @@ public class DashboardViewModel extends MainViewModel {
 
     public DashboardViewModel() {
         toastMessage = new MutableLiveData<>();
-
         dashboardModel = new DashboardModel();
 
         categoriesReady = new MutableLiveData<>();
@@ -37,7 +36,7 @@ public class DashboardViewModel extends MainViewModel {
         });
     }
 
-    public void setProducts(int index) {
+    public void getProducts(int index) {
         if (dashboardModel.getProducts() != null) {
             productsReady.setValue(true);
 

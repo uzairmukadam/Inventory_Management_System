@@ -42,8 +42,8 @@ public class SplashFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel.toastMessage.observe(getViewLifecycleOwner(), integer -> toast(getString(integer)));
-
         viewModel.model.setNavController(Navigation.findNavController(view));
+
         viewModel.initiateCheck();
     }
 

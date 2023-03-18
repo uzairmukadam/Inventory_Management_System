@@ -42,9 +42,9 @@ public class FirebaseFirestoreAdapter {
         return firestore.collection("categories").orderBy("name").get();
     }
 
-    public Task<QuerySnapshot> getProducts(String category) {
+    public Task<QuerySnapshot> getProducts(String category_id) {
         return firestore.collection("products")
-                .whereEqualTo("category", category).orderBy("index").get();
+                .whereEqualTo("category", category_id).orderBy("index").get();
     }
 
     public Task<DocumentReference> addIndividual(int type, Map<String, String> individual) {
@@ -114,6 +114,22 @@ public class FirebaseFirestoreAdapter {
         assert collection != null;
         return firestore.collection(collection)
                 .whereArrayContains("categories", category).get();
+    }
+
+    public Task<QuerySnapshot> getRecords(String id, int type, String category) {
+        String collection = null;
+
+        switch (type) {
+            case 0:
+                collection = "purchases";
+                break;
+            case 1:
+                collection = "sales";
+                break;
+        }
+
+        return firestore.collection(collection).whereEqualTo("id", id)
+                .whereEqualTo("category", category).orderBy("timestamp").get();
     }
 
     public Task<DocumentReference> log(String uid, String device, int versionCode, boolean critical, String msg) {

@@ -11,12 +11,10 @@ public class DashboardModel {
     ArrayList<String> categories, category_ids;
     Map<String, Integer> products;
 
-    public DashboardModel() {
+    public void setCategories(QuerySnapshot querySnapshot) {
         categories = new ArrayList<>();
         category_ids = new ArrayList<>();
-    }
 
-    public void setCategories(QuerySnapshot querySnapshot) {
         for (DocumentSnapshot doc : querySnapshot) {
             String category = doc.getString("name");
             String id = doc.getId();

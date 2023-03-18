@@ -66,9 +66,9 @@
     </fragment>
     <fragment
         android:id="@+id/entryFragment"
-        android:name="com.uzitech.inventory_management_system.fragments.EntryFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.CreateRecordFragment"
         android:label="fragment_entry"
-        tools:layout="@layout/fragment_entry" >
+        tools:layout="@layout/fragment_create_record" >
         <action
             android:id="@+id/action_entryFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
@@ -81,9 +81,9 @@
     </fragment>
     <fragment
         android:id="@+id/viewFragment"
-        android:name="com.uzitech.inventory_management_system.fragments.ViewFragment"
+        android:name="com.uzitech.inventory_management_system.fragments.ViewRecordsFragment"
         android:label="fragment_view"
-        tools:layout="@layout/fragment_view" >
+        tools:layout="@layout/fragment_view_records" >
         <action
             android:id="@+id/action_viewFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"

@@ -21,7 +21,7 @@
 
     <string name="no_products">No product found</string>
 
-    <!-- Entry Fragment -->
+    <!-- Create Records Fragment -->
     <string name="invoice_no">Invoice No:</string>
     <string name="name">Name:</string>
     <string name="gst_no">GST No:</string>
@@ -29,6 +29,11 @@
     <string name="select_customer">Please select a customer</string>
     <string name="date">Date:</string>
     <string name="edit_button">Edit</string>
+
+    <!-- View Records Fragment -->
+    <string name="quantity">Quantity</string>
+    <string name="rate">Rate</string>
+    <string name="total">Total:</string>
 
     <!-- Options Fragment -->
     <string name="dev_note">Developed by UziTech</string>
@@ -42,5 +47,6 @@
     <string name="contact_admin">Please contact the admin</string>
     <string name="empty_input">Please enter valid credentials</string>
     <string name="incorrect_login">Please check your credentials</string>
-    <string name="check_individual_name">Please the name</string>
+    <string name="check_individual_name">Please check the name</string>
+    <string name="record_added">Successfully added</string>
 </resources>
