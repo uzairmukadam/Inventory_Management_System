@@ -116,7 +116,7 @@ public class FirebaseFirestoreAdapter {
                 .whereArrayContains("categories", category).get();
     }
 
-    public Task<QuerySnapshot> getRecords(String id, int type, String category) {
+    public Task<QuerySnapshot> getAllRecords(int type, String category) {
         String collection = null;
 
         switch (type) {
@@ -128,7 +128,8 @@ public class FirebaseFirestoreAdapter {
                 break;
         }
 
-        return firestore.collection(collection).whereEqualTo("id", id)
+        assert collection != null;
+        return firestore.collection(collection)
                 .whereEqualTo("category", category).orderBy("timestamp").get();
     }
 

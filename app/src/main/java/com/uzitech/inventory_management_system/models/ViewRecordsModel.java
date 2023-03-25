@@ -8,9 +8,10 @@ public class ViewRecordsModel {
 
     private int type;
     private String category_id;
-    private String instruction;
-    private ArrayList<String> individuals, individual_ids, products, product_ids, record_dates;
-    private ArrayList<Map<String, Object>> records;
+    private String instruction, date_instruction;
+    private ArrayList<String> individuals, individual_ids, products, product_ids;
+    private ArrayList<ArrayList<String>> record_dates;
+    private ArrayList<ArrayList<ArrayList<Map<String, Object>>>> records;
     private Date date;
 
     public void setModel(int type, String category_id) {
@@ -20,6 +21,10 @@ public class ViewRecordsModel {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+    public void setDatesInstruction(String date_instruction) {
+        this.date_instruction = date_instruction;
     }
 
     public void setIndividuals(ArrayList<String> individuals, ArrayList<String> individual_ids) {
@@ -35,12 +40,20 @@ public class ViewRecordsModel {
         this.product_ids = product_ids;
     }
 
-    public void setRecord_dates(ArrayList<String> record_dates) {
+    public void setRecord_dates(ArrayList<ArrayList<String>> record_dates) {
         this.record_dates = record_dates;
+
+        for (int i = 0; i < record_dates.size(); i++) {
+            record_dates.get(i).add(0, date_instruction);
+        }
     }
 
-    public void setRecords(ArrayList<Map<String, Object>> records) {
+    public void setRecords(ArrayList<ArrayList<ArrayList<Map<String, Object>>>> records) {
         this.records = records;
+
+        for (int i = 0; i < records.size(); i++) {
+            records.get(i).add(0, null);
+        }
     }
 
     public int getType() {
@@ -67,11 +80,27 @@ public class ViewRecordsModel {
         return product_ids;
     }
 
-    public ArrayList<String> getRecord_dates() {
+    public ArrayList<ArrayList<String>> getRecord_dates() {
         return record_dates;
     }
 
-    public ArrayList<Map<String, Object>> getRecords(String date) {
-        return null;
+    public ArrayList<ArrayList<Map<String, Object>>> getIndividualRecord(int individual) {
+        if (individual > 0) {
+            return records.get(individual);
+        } else {
+            return null;
+        }
+    }
+
+    public ArrayList<Map<String, Object>> getDateRecord(int individual, int date) {
+        if (individual > 0) {
+            return getIndividualRecord(individual).get(date);
+        } else {
+            return null;
+        }
+    }
+
+    public ArrayList<ArrayList<ArrayList<Map<String, Object>>>> getAllRecords() {
+        return records;
     }
 }

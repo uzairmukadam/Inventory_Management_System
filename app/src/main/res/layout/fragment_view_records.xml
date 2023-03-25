@@ -25,7 +25,8 @@
             android:id="@+id/record_dates_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/min_spinner_height" />
+            android:minHeight="@dimen/min_spinner_height"
+            tools:visibility="gone" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

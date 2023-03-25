@@ -34,6 +34,7 @@
     <string name="quantity">Quantity</string>
     <string name="rate">Rate</string>
     <string name="total">Total:</string>
+    <string name="select_date">Please select a date</string>
 
     <!-- Options Fragment -->
     <string name="dev_note">Developed by UziTech</string>

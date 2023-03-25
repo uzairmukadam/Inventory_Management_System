@@ -23,11 +23,10 @@ import com.uzitech.inventory_management_system.R;
 import com.uzitech.inventory_management_system.viewmodels.ViewRecordsViewModel;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ViewRecordsFragment extends Fragment {
 
-    private int type;
-    private String product_id;
     ViewRecordsViewModel viewModel;
     Spinner individuals_spinner, dates_spinner;
     ArrayAdapter<String> individuals_adapter, dates_adapter;
@@ -45,8 +44,8 @@ public class ViewRecordsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            type = getArguments().getInt("type");
-            product_id = getArguments().getString("product_id");
+            int type = getArguments().getInt("type");
+            String product_id = getArguments().getString("product_id");
 
             viewModel = new ViewModelProvider(this).get(ViewRecordsViewModel.class);
 
@@ -58,6 +57,8 @@ public class ViewRecordsFragment extends Fragment {
 
                 viewModel.viewRecordsModel.setInstruction(getString(R.string.select_customer));
             }
+
+            viewModel.viewRecordsModel.setDatesInstruction(getString(R.string.select_date));
         }
     }
 
@@ -82,12 +83,12 @@ public class ViewRecordsFragment extends Fragment {
 
         viewModel.getProducts();
 
-        viewModel.individuals_loaded.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        viewModel.data_loaded.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     setIndividualsSpinner();
-                    viewModel.individuals_loaded.setValue(false);
+                    setFrame();
                 }
             }
         });
@@ -102,15 +103,15 @@ public class ViewRecordsFragment extends Fragment {
 
         individuals_spinner.setAdapter(individuals_adapter);
 
-        setFrame();
-
         individuals_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
-                    viewModel.getRecords(i);
+                    setDatesSpinner(i);
                 } else {
                     //reset dates spinner
+                    dates_spinner.setVisibility(View.GONE);
+                    setValues(i, 0);
                 }
             }
 
@@ -121,10 +122,12 @@ public class ViewRecordsFragment extends Fragment {
         });
     }
 
-    void setDatesSpinner() {
+    void setDatesSpinner(int pos) {
         dates_adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item,
-                viewModel.viewRecordsModel.getRecord_dates());
+                viewModel.viewRecordsModel.getRecord_dates().get(pos));
+
+        dates_spinner.setVisibility(View.VISIBLE);
 
         dates_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -133,7 +136,7 @@ public class ViewRecordsFragment extends Fragment {
         dates_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                setValues(individuals_spinner.getSelectedItemPosition(), i);
             }
 
             @Override
@@ -172,6 +175,27 @@ public class ViewRecordsFragment extends Fragment {
         total_cost_textView = total.findViewById(R.id.total_cost_textView);
         total_cost_textView.setText(String.valueOf(0));
         records_layout.addView(total);
+
+        viewModel.data_loaded.setValue(false);
+    }
+
+    void setValues(int individual, int date) {
+        Map<String, Object> data = viewModel.getRecordData(individual, date);
+
+        ArrayList<Integer> quantities = (ArrayList<Integer>) data.get("quantities");
+        ArrayList<Double> rates = (ArrayList<Double>) data.get("rates");
+        double total = (double) data.get("total");
+
+        for (int i = 0; i < viewModel.viewRecordsModel.getProduct_ids().size(); i++) {
+            TextView quantity_textView = product_quantity_textViews.get(i);
+            TextView rate_textView = product_rate_textViews.get(i);
+
+            assert quantities != null;
+            assert rates != null;
+            quantity_textView.setText(String.valueOf(quantities.get(i)));
+            rate_textView.setText(String.valueOf(rates.get(i)));
+            total_cost_textView.setText(String.valueOf(total));
+        }
     }
 
     public void toast(String message) {
