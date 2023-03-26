@@ -103,6 +103,7 @@ public class CreateRecordFragment extends Fragment {
         date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //add date picker
             }
         });
 

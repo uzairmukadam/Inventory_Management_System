@@ -2,8 +2,9 @@ package com.uzitech.inventory_management_system.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.uzitech.inventory_management_system.R;
+
+import java.util.Map;
 
 public class SplashViewModel extends MainViewModel {
 
@@ -16,15 +17,15 @@ public class SplashViewModel extends MainViewModel {
     public void initiateCheck() {
         firestoreAdapter.getMetadata().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot metadata = task.getResult();
+                Map<String, Object> metadata = task.getResult().getData();
                 int version_code = model.getVersion();
 
                 // check application version
-                if (version_code >= metadata.getLong("supported_version")
-                        && version_code <= metadata.getLong("current_version")) {
+                if (version_code >= (long) metadata.get("supported_version")
+                        && version_code <= (long) metadata.get("current_version")) {
 
                     // outdated application version
-                    if (version_code > metadata.getLong("current_version")) {
+                    if (version_code > (long) metadata.get("current_version")) {
                         toastMessage.setValue(R.string.update_available);
                     }
 
@@ -52,14 +53,14 @@ public class SplashViewModel extends MainViewModel {
     void checkUser() {
         firestoreAdapter.getUser(model.getUid()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot user = task.getResult();
+                Map<String, Object> user = task.getResult().getData();
 
                 // check user account status
-                if (Boolean.TRUE.equals(user.getBoolean("is_active"))) {
+                if ((boolean) user.get("is_active")) {
 
                     // check if user already logged in
-                    if (Boolean.TRUE.equals(user.getBoolean("is_login"))) {
-                        model.setAccessLevel(user);
+                    if ((boolean) user.get("is_login")) {
+                        model.setAccessLevel((long) user.get("access_level"));
                         navigateTo(R.id.action_splashFragment_to_dashboardFragment);
                     } else {
                         toastMessage.setValue(R.string.contact_admin);

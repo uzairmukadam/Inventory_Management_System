@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -83,13 +82,10 @@ public class ViewRecordsFragment extends Fragment {
 
         viewModel.getProducts();
 
-        viewModel.data_loaded.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    setIndividualsSpinner();
-                    setFrame();
-                }
+        viewModel.data_loaded.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
+                setIndividualsSpinner();
+                setFrame();
             }
         });
     }

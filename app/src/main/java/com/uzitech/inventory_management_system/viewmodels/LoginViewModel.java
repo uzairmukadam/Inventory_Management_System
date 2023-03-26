@@ -2,8 +2,9 @@ package com.uzitech.inventory_management_system.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.uzitech.inventory_management_system.R;
+
+import java.util.Map;
 
 public class LoginViewModel extends MainViewModel {
 
@@ -47,10 +48,10 @@ public class LoginViewModel extends MainViewModel {
     void checkUser() {
         firestoreAdapter.getUser(model.getUid()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot user = task.getResult();
-                if (Boolean.TRUE.equals(user.getBoolean("is_active"))) {
-                    if (Boolean.FALSE.equals(user.getBoolean("is_login"))) {
-                        model.setAccessLevel(user);
+                Map<String, Object> user = task.getResult().getData();
+                if ((boolean) user.get("is_active")) {
+                    if (!(boolean) user.get("is_login")) {
+                        model.setAccessLevel((long) user.get("access_level"));
                         updateUser();
                     } else {
                         authAdapter.signout();

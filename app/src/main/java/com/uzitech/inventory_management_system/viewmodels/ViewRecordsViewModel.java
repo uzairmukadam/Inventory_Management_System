@@ -79,7 +79,6 @@ public class ViewRecordsViewModel extends MainViewModel {
 
                 SimpleDateFormat df = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
 
-                Map<String, Object> data = new HashMap<>();
                 ArrayList<ArrayList<String>> dates = new ArrayList<>();
                 ArrayList<ArrayList<ArrayList<Map<String, Object>>>> records = new ArrayList<>();
 

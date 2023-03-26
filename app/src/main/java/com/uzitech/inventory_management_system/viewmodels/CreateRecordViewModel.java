@@ -137,12 +137,10 @@ public class CreateRecordViewModel extends MainViewModel {
             } else {
                 addNewIndividual(new_individual, records, date);
             }
-            //update quantity
         } else {
             String id = createRecordModel.getIndividual_ids().get(index);
 
             addRecord(records, id, date);
-            //update quantity
         }
     }
 

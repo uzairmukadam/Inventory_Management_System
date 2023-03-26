@@ -54,14 +54,14 @@ public class DashboardFragment extends Fragment {
         category_spinner = view.findViewById(R.id.categories_spinner);
         entry_purchase_button = view.findViewById(R.id.entry_purchase_button);
         entry_sale_button = view.findViewById(R.id.entry_sale_button);
-        view_purchases_button = view.findViewById(R.id.view_purchases_button);
-        view_sales_button = view.findViewById(R.id.view_sales_button);
         options_button = view.findViewById(R.id.options_button);
-        view_records_linearLayout = view.findViewById(R.id.view_linearLayout);
         products_quantity_linearLayout = view.findViewById(R.id.product_count_linearLayout);
 
-        if (viewModel.model.getAccessLevel() > 1) {
-            view_records_linearLayout.setVisibility(View.GONE);
+        if (viewModel.model.getAccessLevel() >= 1) {
+            view_records_linearLayout = view.findViewById(R.id.view_linearLayout);
+            view_records_linearLayout.setVisibility(View.VISIBLE);
+            view_purchases_button = view.findViewById(R.id.view_purchases_button);
+            view_sales_button = view.findViewById(R.id.view_sales_button);
         }
 
         return view;

@@ -2,8 +2,6 @@ package com.uzitech.inventory_management_system.models;
 
 import androidx.navigation.NavController;
 
-import com.google.firebase.firestore.DocumentSnapshot;
-
 public class MainModel {
 
     String Uid, device;
@@ -24,9 +22,8 @@ public class MainModel {
         this.version = version;
     }
 
-    public void setAccessLevel(DocumentSnapshot user) {
-        access_level = Math.toIntExact(user.getLong("access_level"));
-
+    public void setAccessLevel(long user) {
+        access_level = (int) user;
     }
 
     public void setNavController(NavController navController) {

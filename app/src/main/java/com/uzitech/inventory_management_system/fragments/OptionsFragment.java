@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,8 @@ import com.uzitech.inventory_management_system.viewmodels.OptionsViewModel;
 public class OptionsFragment extends Fragment {
 
     OptionsViewModel viewModel;
-
     Button signout_button;
+    LinearLayout admin_options_linearLayout;
 
     public OptionsFragment() {
         // Required empty public constructor
@@ -40,6 +41,11 @@ public class OptionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_options, container, false);
 
         signout_button = view.findViewById(R.id.sign_out_button);
+
+        if (viewModel.model.getAccessLevel() == 0) {
+            admin_options_linearLayout = view.findViewById(R.id.admin_options_linearLayout);
+            admin_options_linearLayout.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
