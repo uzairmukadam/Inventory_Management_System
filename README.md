@@ -181,6 +181,7 @@ The android application follows a singleton architecture. There is only one acti
 1. Implementation of access_level 0 options.
 2. Implementation of a suitable UI.
 3. Optimization of codes.
+4. Documentation improvements.
 
 # Usage
 
