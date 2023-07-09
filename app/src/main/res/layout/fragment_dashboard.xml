@@ -9,74 +9,23 @@
     <Spinner
         android:id="@+id/categories_spinner"
         android:layout_width="match_parent"
+        android:elevation="8dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/spinner"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginHorizontal="@dimen/dashboard_side_margin"
         android:minHeight="@dimen/min_spinner_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/entry_purchase_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/entry_purchase_button" />
-
-            <Button
-                android:id="@+id/entry_sale_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/entry_sale_button" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/view_linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/view_purchases_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/view_purchases_button" />
-
-            <Button
-                android:id="@+id/view_sales_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/view_sales_button" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/options_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/options_button" />
-    </LinearLayout>
-
     <ScrollView
+        android:id="@+id/scrollView2"
+        style="@style/product_count_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categories_spinner">
@@ -87,5 +36,77 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/entry_purchase_button"
+                style="@style/dashboard_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button"
+                android:text="@string/entry_purchase_button" />
+
+            <Button
+                android:id="@+id/view_purchases_button"
+                style="@style/dashboard_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button"
+                android:text="@string/view_purchases_button" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/view_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/entry_sale_button"
+                style="@style/dashboard_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button"
+                android:text="@string/entry_sale_button" />
+
+            <Button
+                android:id="@+id/view_sales_button"
+                style="@style/dashboard_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button"
+                android:text="@string/view_sales_button" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/options_button"
+                style="@style/dashboard_button"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_button"
+                android:text="@string/options_button" />
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

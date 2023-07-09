@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uzitech.inventory_management_system.R;
 import com.uzitech.inventory_management_system.viewmodels.ViewRecordsViewModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -29,10 +30,12 @@ public class ViewRecordsFragment extends Fragment {
     ViewRecordsViewModel viewModel;
     Spinner individuals_spinner, dates_spinner;
     ArrayAdapter<String> individuals_adapter, dates_adapter;
-    LinearLayout records_layout;
+    LinearLayout records_layout, total_layout;
     TextView total_cost_textView;
     ArrayList<TextView> product_quantity_textViews, product_rate_textViews;
     FloatingActionButton share_record_fab;
+
+    DecimalFormat decimalFormat;
 
     public ViewRecordsFragment() {
         // Required empty public constructor
@@ -58,6 +61,8 @@ public class ViewRecordsFragment extends Fragment {
             }
 
             viewModel.viewRecordsModel.setDatesInstruction(getString(R.string.select_date));
+
+            decimalFormat = new DecimalFormat("0.00");
         }
     }
 
@@ -69,6 +74,7 @@ public class ViewRecordsFragment extends Fragment {
         individuals_spinner = view.findViewById(R.id.view_individuals_spinner);
         dates_spinner = view.findViewById(R.id.record_dates_spinner);
         records_layout = view.findViewById(R.id.view_record_container);
+        total_layout = view.findViewById(R.id.view_records_total_field);
 
         return view;
     }
@@ -167,10 +173,8 @@ public class ViewRecordsFragment extends Fragment {
             records_layout.addView(record);
         }
 
-        LinearLayout total = (LinearLayout) inflater.inflate(R.layout.view_records_total_field, null, false);
-        total_cost_textView = total.findViewById(R.id.total_cost_textView);
+        total_cost_textView = total_layout.findViewById(R.id.total_cost_textView);
         total_cost_textView.setText(String.valueOf(0));
-        records_layout.addView(total);
 
         viewModel.data_loaded.setValue(false);
     }
@@ -189,8 +193,8 @@ public class ViewRecordsFragment extends Fragment {
             assert quantities != null;
             assert rates != null;
             quantity_textView.setText(String.valueOf(quantities.get(i)));
-            rate_textView.setText(String.valueOf(rates.get(i)));
-            total_cost_textView.setText(String.valueOf(total));
+            rate_textView.setText(decimalFormat.format(rates.get(i)));
+            total_cost_textView.setText(decimalFormat.format(total));
         }
     }
 

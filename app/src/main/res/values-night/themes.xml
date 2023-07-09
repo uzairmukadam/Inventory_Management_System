@@ -13,4 +13,29 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="primary_button"></style>
+
+    <style name="dashboard_button">
+        <item name="android:layout_marginBottom">@dimen/dashboard_bottom_margin</item>
+        <item name="android:layout_marginRight">@dimen/dashboard_side_margin</item>
+        <item name="android:layout_marginLeft">@dimen/dashboard_side_margin</item>
+    </style>
+
+    <style name="login_field">
+        <item name="colorControlActivated">?attr/colorSecondary</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_margin">@dimen/login_field_margin</item>
+    </style>
+
+    <style name="loading_bar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
+
+    <style name="product_count_panel">
+        <item name="android:background">@drawable/product_count_panel</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:padding">@dimen/panel_padding</item>
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
 </resources>

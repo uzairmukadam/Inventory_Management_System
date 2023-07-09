@@ -10,6 +10,7 @@
         android:id="@+id/dev_note_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
         android:text="@string/dev_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,21 +34,28 @@
 
             <Button
                 android:id="@+id/manage_products_button"
+                style="@style/dashboard_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/primary_button"
                 android:text="@string/manage_products_button" />
 
             <Button
                 android:id="@+id/manage_users_button"
+                style="@style/dashboard_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/primary_button"
                 android:text="@string/manage_users_button" />
         </LinearLayout>
 
         <Button
             android:id="@+id/sign_out_button"
+            style="@style/primary_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:background="@drawable/primary_button"
             android:text="@string/sign_out_button" />
 
     </LinearLayout>

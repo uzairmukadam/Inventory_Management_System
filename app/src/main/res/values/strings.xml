@@ -15,10 +15,10 @@
     <string name="login_button">Login</string>
 
     <!-- Dashboard Fragment -->
-    <string name="entry_purchase_button">Purchase</string>
-    <string name="entry_sale_button">Sale</string>
-    <string name="view_purchases_button">All Purchases</string>
-    <string name="view_sales_button">All Sales</string>
+    <string name="entry_purchase_button">New Purchase</string>
+    <string name="entry_sale_button">New Sale</string>
+    <string name="view_purchases_button">View Purchases</string>
+    <string name="view_sales_button">View Sales</string>
     <string name="options_button">Options</string>
 
     <string name="no_products">No product found</string>
@@ -29,6 +29,8 @@
     <string name="gst_no">GST No:</string>
     <string name="date">Date:</string>
     <string name="edit_button">Edit</string>
+    <string name="no_manufacturer">Please select a manufacturer</string>
+    <string name="no_customer">Please select a customer</string>
 
     <!-- View Records Fragment -->
     <string name="quantity">Quantity</string>

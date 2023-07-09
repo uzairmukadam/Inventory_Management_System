@@ -138,9 +138,13 @@ public class CreateRecordViewModel extends MainViewModel {
                 addNewIndividual(new_individual, records, date);
             }
         } else {
-            String id = createRecordModel.getIndividual_ids().get(index);
+            if (index != 0){
+                String id = createRecordModel.getIndividual_ids().get(index);
 
-            addRecord(records, id, date);
+                addRecord(records, id, date);
+            } else {
+                toastMessage.setValue(R.string.no_manufacturer);
+            }
         }
     }
 
