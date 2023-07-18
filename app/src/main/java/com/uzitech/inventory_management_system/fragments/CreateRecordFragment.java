@@ -85,6 +85,8 @@ public class CreateRecordFragment extends Fragment {
         new_individual_layout = view.findViewById(R.id.new_individual_layout);
         submit = view.findViewById(R.id.submit_entry_button);
 
+        viewModel.createRecordModel.setNew_individual(new_individual_layout);
+
         date_textView.setText(df.format(date));
         date_button = view.findViewById(R.id.edit_date_button);
 

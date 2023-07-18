@@ -47,7 +47,7 @@ public class FirebaseFirestoreAdapter {
                 .whereEqualTo("category", category_id).orderBy("index").get();
     }
 
-    public Task<DocumentReference> addIndividual(int type, Map<String, String> individual) {
+    public Task<DocumentReference> addIndividual(int type, Map<String, Object> individual) {
         String collection = null;
 
         switch (type) {

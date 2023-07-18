@@ -1,5 +1,7 @@
 package com.uzitech.inventory_management_system.models;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,6 +14,8 @@ public class CreateRecordModel {
     private ArrayList<Double> product_rates;
     private ArrayList<Integer> product_quantities;
     private Date date;
+
+    private View new_individual;
 
     public void setModel(int type, String category_id) {
         this.type = type;
@@ -39,6 +43,10 @@ public class CreateRecordModel {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void setNew_individual(View new_individual){
+        this.new_individual = new_individual;
     }
 
     public int getType() {
@@ -75,5 +83,9 @@ public class CreateRecordModel {
 
     public Date getDate() {
         return date;
+    }
+
+    public View getNew_individual(){
+        return new_individual;
     }
 }

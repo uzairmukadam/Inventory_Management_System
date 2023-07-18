@@ -1,5 +1,6 @@
 package com.uzitech.inventory_management_system.viewmodels;
 
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CreateRecordViewModel extends MainViewModel {
 
@@ -118,27 +120,37 @@ public class CreateRecordViewModel extends MainViewModel {
             }
         }
 
-        Map<String, String> new_user = null;
+        Map<String, Object> new_user = null;
 
         if (index == createRecordModel.getIndividuals().size() - 1) {
             new_user = new HashMap<>();
+
+            View individual = createRecordModel.getNew_individual();
+            EditText name = individual.findViewById(R.id.new_name_editText);
+            EditText gst = individual.findViewById(R.id.new_gst_editText);
+
+            ArrayList<String> categories = new ArrayList<>();
+            categories.add(createRecordModel.getCategory_id());
+
+            new_user.put("categories", categories);
+            new_user.put("name", name.getText().toString());
+            new_user.put("gst_no", gst.getText().toString());
         }
 
         submitRecord(createRecordModel.getDate(), index, records, new_user);
     }
 
-    public void submitRecord(Date date, int index, ArrayList<Map<String, Object>> records, Map<String, String> new_individual) {
+    public void submitRecord(Date date, int index, ArrayList<Map<String, Object>> records, Map<String, Object> new_individual) {
         if (new_individual != null) {
-            String individual_name = new_individual.get("name");
+            String individual_name = Objects.requireNonNull(new_individual.get("name")).toString();
 
-            assert individual_name != null;
             if (individual_name.trim().isEmpty()) {
                 toastMessage.setValue(R.string.check_individual_name);
             } else {
                 addNewIndividual(new_individual, records, date);
             }
         } else {
-            if (index != 0){
+            if (index != 0) {
                 String id = createRecordModel.getIndividual_ids().get(index);
 
                 addRecord(records, id, date);
@@ -148,7 +160,7 @@ public class CreateRecordViewModel extends MainViewModel {
         }
     }
 
-    private void addNewIndividual(Map<String, String> individual, ArrayList<Map<String, Object>> records, Date date) {
+    private void addNewIndividual(Map<String, Object> individual, ArrayList<Map<String, Object>> records, Date date) {
         firestoreAdapter.addIndividual(createRecordModel.getType(), individual).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 String id = task.getResult().getId();

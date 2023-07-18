@@ -33,7 +33,7 @@
             android:text="@string/gst_no" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/new_gst_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
